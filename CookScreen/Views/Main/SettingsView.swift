@@ -1,5 +1,5 @@
 //
-//  RecipeListView.swift
+//  SettingsView.swift
 //  CookScreen
 //
 //  Created by Blue Snow on 25/4/2565 BE.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeListView: View {
+struct SettingsView: View {
     var body: some View {
         NavigationView {
             Color(.systemGray6)
@@ -16,8 +16,8 @@ struct RecipeListView: View {
     }
 }
 
-struct RecipeListView_Previews: PreviewProvider {
+struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeListView()
+        SettingsView()
     }
 }

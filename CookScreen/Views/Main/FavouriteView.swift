@@ -12,7 +12,6 @@ struct FavouriteView: View {
         NavigationView {
             Color(.systemGray6)
                 .ignoresSafeArea()
-                .navigationTitle("Fav")
         }
     }
 }

@@ -10,6 +10,9 @@ import SwiftUI
 enum Tab {
     case recipetab
     case favtab
+    case addrecipetab
+    case categorytab
+    case settingstab
 }
 
 struct TabButtonStyle : ButtonStyle {
@@ -23,6 +26,7 @@ struct TabButtonStyle : ButtonStyle {
 // Main screen view and navigation
 struct ContentView: View {
     @State private var selectedTab: Tab = .recipetab
+    
     var body: some View {
         VStack {
             switch selectedTab {
@@ -30,36 +34,59 @@ struct ContentView: View {
                 RecipeListView()
             case .favtab:
                 FavouriteView()
+            case .addrecipetab:
+                RecipeAddView()
+            case .categorytab:
+                CategoryListView()
+            case .settingstab:
+                SettingsView()
             }
-            CustomTabView(selectedTab: $selectedTab)
+            NavBar(selectedTab: $selectedTab)
                 .frame(height: 50)
         }
     }
 }
 
 // Navigation Tab with a big 'add' button in the middle
-struct CustomTabView: View {
+struct NavBar: View {
     @Binding var selectedTab: Tab
     var body: some View {
         HStack {
             Spacer()
-            Button {
-                selectedTab = .recipetab
-            } label: {
-                VStack {
-                    Image(systemName: "house")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                    Text("Home")
-                        .font(.caption2)
+            Group {
+                // Home or recipe tab
+                Button {
+                    selectedTab = .recipetab
+                } label: {
+                    VStack {
+                        Image(systemName: "house")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                        Text("Recipes")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(selectedTab == .recipetab ? .blue : .primary)
                 }
-                .foregroundColor(selectedTab == .recipetab ? .blue : .primary)
+                Spacer()
+                // favourite recipe tab
+                Button {
+                    selectedTab = .favtab
+                } label: {
+                    VStack {
+                        Image(systemName: "suit.heart")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                        Text("Favourite")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(selectedTab == .favtab ? .blue : .primary)
+                }
             }
-            Spacer()
             // Add recipe button
             Button {
-                
+                selectedTab = .addrecipetab
             } label: {
                 ZStack {
                     Circle()
@@ -74,19 +101,36 @@ struct CustomTabView: View {
                 .offset(y: -32)
             }
             .buttonStyle(TabButtonStyle())
-            Spacer()
-            Button {
-                selectedTab = .favtab
-            } label: {
-                VStack {
-                    Image(systemName: "chart.bar")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                    Text("Favourite")
-                        .font(.caption2)
+            Group {
+                // category recipe tab
+                Button {
+                    selectedTab = .categorytab
+                } label: {
+                    VStack {
+                        Image(systemName: "tag")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                        Text("Categories")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(selectedTab == .categorytab ? .blue : .primary)
                 }
-                .foregroundColor(selectedTab == .favtab ? .blue : .primary)
+                Spacer()
+                // settings tab
+                Button {
+                    selectedTab = .settingstab
+                } label: {
+                    VStack {
+                        Image(systemName: "gearshape")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 25, height: 25)
+                        Text("Settings")
+                            .font(.caption2)
+                    }
+                    .foregroundColor(selectedTab == .settingstab ? .blue : .primary)
+                }
             }
             Spacer()
         }

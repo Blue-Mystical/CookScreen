@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName=".Category" syncable="YES">
+        <attribute name="dateAdded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Recipe" representedClassName=".Recipe" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="Transformable"/>
+        <attribute name="cookingtime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dateadded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="directions" optional="YES" attributeType="String"/>
+        <attribute name="favourited" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Binary"/>
+        <attribute name="ingredients" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="nutrition" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="yield" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="Category" positionX="-3402" positionY="-495" width="128" height="59"/>
+        <element name="Recipe" positionX="-3401.03125" positionY="-508.03125" width="128" height="209"/>
+    </elements>
+</model>

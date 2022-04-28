@@ -6,13 +6,30 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct RecipeAddView: View {
+    
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
+    @State private var name: String = ""
+    @State private var category: String = ""
+    @State private var desc: String = ""
+    @State private var cookingtime: Int32 = 0
+    @State private var directions: String = ""
+    @State private var description: String = ""
+    @State private var ingredients: String = ""
+    @State private var nutrition: Int32 = 0
+    @State private var yield: Int32 = 0
+    
     var body: some View {
         NavigationView {
-            Color(.systemGray6)
-                .ignoresSafeArea()
-                .navigationTitle("Add")
+            Form {
+                Section(header: Text("Name")) {
+                    TextField("Recipe Name", text: $name)
+                }
+            }
+            .navigationTitle("Add Recipe")
         }
     }
 }
