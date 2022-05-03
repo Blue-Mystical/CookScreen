@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecipeListView: View {
+    var favouriteMode: Bool = false
+    
     var body: some View {
         NavigationView {
             Color(.systemGray6)
@@ -18,6 +20,6 @@ struct RecipeListView: View {
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeListView()
+        RecipeListView(favouriteMode: false)
     }
 }

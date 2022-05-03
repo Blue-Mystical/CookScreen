@@ -13,7 +13,7 @@ class DataController: ObservableObject {
     static let shared: DataController = DataController()
     
     private init() {
-        persistentContainer = NSPersistentContainer(name: "CookScreenModel")
+        persistentContainer = NSPersistentContainer(name: "CookScreenM")
         persistentContainer.loadPersistentStores { description, error in
             if let error = error {
                 fatalError("Cannot initialize core data \(error)")

@@ -31,11 +31,11 @@ struct ContentView: View {
         VStack {
             switch selectedTab {
             case .recipetab:
-                RecipeListView()
+                RecipeListView(favouriteMode: false)
             case .favtab:
-                FavouriteView()
+                RecipeListView(favouriteMode: true)
             case .addrecipetab:
-                RecipeAddView()
+                RecipeAddView(editingMode: false, recipeID: UUID())
             case .categorytab:
                 CategoryListView()
             case .settingstab:

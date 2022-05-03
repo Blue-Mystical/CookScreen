@@ -5,7 +5,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Recipe" representedClassName=".Recipe" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="Transformable"/>
+        <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="cookingtime" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateadded" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="desc" optional="YES" attributeType="String"/>

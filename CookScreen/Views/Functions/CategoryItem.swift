@@ -14,6 +14,7 @@ public class Category:NSManagedObject, Identifiable {
 }
 
 extension Category {
+    
     static func getAllCategories() -> NSFetchRequest<Category> {
         let request:NSFetchRequest<Category> = Category.fetchRequest() as! NSFetchRequest<Category>
         
@@ -23,4 +24,5 @@ extension Category {
         
         return request
     }
+    
 }
