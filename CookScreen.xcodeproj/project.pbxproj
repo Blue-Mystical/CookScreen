@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		345CB2CF282153D600C7A89C /* RecipeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345CB2CE282153D600C7A89C /* RecipeItem.swift */; };
+		345CB2D528215DD200C7A89C /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345CB2D428215DD200C7A89C /* ImagePicker.swift */; };
+		345CB2D928223A1E00C7A89C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345CB2D828223A1E00C7A89C /* SearchBar.swift */; };
 		346E1B80280EBA7900D6F91F /* CookScreenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346E1B7F280EBA7900D6F91F /* CookScreenApp.swift */; };
 		346E1B82280EBA7900D6F91F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 346E1B81280EBA7900D6F91F /* ContentView.swift */; };
 		346E1B84280EBA8900D6F91F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 346E1B83280EBA8900D6F91F /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		345CB2CE282153D600C7A89C /* RecipeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeItem.swift; sourceTree = "<group>"; };
+		345CB2D428215DD200C7A89C /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		345CB2D828223A1E00C7A89C /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		346E1B7C280EBA7900D6F91F /* CookScreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CookScreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		346E1B7F280EBA7900D6F91F /* CookScreenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookScreenApp.swift; sourceTree = "<group>"; };
 		346E1B81280EBA7900D6F91F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 			children = (
 				34FE6159281ACC00000BBEF3 /* CategoryItem.swift */,
 				345CB2CE282153D600C7A89C /* RecipeItem.swift */,
+				345CB2D428215DD200C7A89C /* ImagePicker.swift */,
+				345CB2D828223A1E00C7A89C /* SearchBar.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -212,7 +218,9 @@
 			files = (
 				345CB2CF282153D600C7A89C /* RecipeItem.swift in Sources */,
 				34E5716D2816B2BB00A2A27E /* RecipeListView.swift in Sources */,
+				345CB2D928223A1E00C7A89C /* SearchBar.swift in Sources */,
 				34E571852816DCEB00A2A27E /* CookScreenM.xcdatamodeld in Sources */,
+				345CB2D528215DD200C7A89C /* ImagePicker.swift in Sources */,
 				347B1E752819A6C2008E47AC /* RecipeDescView.swift in Sources */,
 				346E1B82280EBA7900D6F91F /* ContentView.swift in Sources */,
 				34FE612D281AAA76000BBEF3 /* CategoryRowView.swift in Sources */,

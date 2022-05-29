@@ -22,3 +22,17 @@ public class Recipe:NSManagedObject, Identifiable {
     @NSManaged public var nutrition: Int32
     @NSManaged public var yield: Int32
 }
+
+extension Recipe {
+    
+    static func getAllRecipes() -> NSFetchRequest<Recipe> {
+        let request:NSFetchRequest<Recipe> = Recipe.fetchRequest() as! NSFetchRequest<Recipe>
+        
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptor]
+        
+        return request
+    }
+    
+}

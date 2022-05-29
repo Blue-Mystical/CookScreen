@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Tab {
+public enum Tab {
     case recipetab
     case favtab
     case addrecipetab

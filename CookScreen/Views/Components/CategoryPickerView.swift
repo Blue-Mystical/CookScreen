@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// This component is unused as I couldn't implement the multiple picker due to 
+// This component is unused as I couldn't implement the multiple picker
 struct CategoryPickerView: View {
     @State var categoryList: [String]
     @Binding var selectedCategories: [String]

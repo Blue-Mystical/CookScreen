@@ -17,6 +17,8 @@ struct RecipeAddView: View {
     var editingMode: Bool = false
     var recipeID: UUID = UUID()
     @State private var showingPopover: Bool = false
+    @State private var showingAlert: Bool = false
+    
     
     @State private var name: String = ""
 //    @State private var category: [String] = []
@@ -32,7 +34,17 @@ struct RecipeAddView: View {
     
     @State var showImage: Bool = false
     
-    @State private var selectedName = "Unknown"
+    @State private var selectedCategory = "Unknown"
+    
+    func ResetValues() {
+        name = ""
+        desc = ""
+        cookingtime = 0
+        directions = ""
+        ingredients = ""
+        nutrition = 0
+        yield = 0
+    }
     
     var body: some View {
         NavigationView {
@@ -43,7 +55,7 @@ struct RecipeAddView: View {
                 Section(header: Text("Category")) {
                     
                     VStack {
-                        Picker("Category", selection: $selectedName) {
+                        Picker("Category", selection: $selectedCategory) {
                             ForEach(categoryList, id: \.self) { (catitem: Category) in
                                 Text(catitem.name!).tag(catitem.name!)
                             }
@@ -99,6 +111,10 @@ struct RecipeAddView: View {
                             self.showImage.toggle()
                         }) {
                             Image(uiImage: UIImage(data: self.image)!)
+                                .renderingMode(.original)
+                            .resizable()
+                                .frame(width: 150, height: 150)
+                            .cornerRadius(12)
                         }
                     } else {
                         Button(action: {
@@ -111,11 +127,40 @@ struct RecipeAddView: View {
                 }
                 Section {
                     Button("Add Recipe") {
-//                        let newRecipe
+                        let newRecipe = Recipe(context: managedObjectContext)
+                        newRecipe.id = UUID()
+                        newRecipe.name = self.name
+                        newRecipe.dateadded = Date()
+                        newRecipe.category = self.selectedCategory
+                        newRecipe.desc = self.desc
+                        newRecipe.cookingtime = self.cookingtime
+                        newRecipe.directions = self.directions
+                        newRecipe.ingredients = self.ingredients
+                        newRecipe.nutrition = self.nutrition
+                        newRecipe.yield = self.yield
+                        newRecipe.image = self.image
+                        newRecipe.favourited = false
+                        
+                        print(newRecipe)
+                        
+                        do {
+                            try self.managedObjectContext.save()
+                        } catch {
+                            print(error)
+                        }
+                        print("Save completed")
+                        showingAlert = true
+                        ResetValues()
                     }
                 }
             }
+            .sheet(isPresented: self.$showImage, content: {
+                ImagePicker(showImage: self.$showImage, image: self.$image)
+            })
             .navigationTitle("Add Recipe")
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Notice"), message: Text("Successfully added a recipe."), dismissButton: .default(Text("OK")))
         }
     }
 }
