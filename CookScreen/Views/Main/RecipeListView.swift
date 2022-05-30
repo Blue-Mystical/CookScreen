@@ -19,12 +19,20 @@ struct RecipeListView: View {
     @State public var navDesc: Bool = false
     @State var selectedRecipe: UUID = UUID()
     
+    func getItem(with id: UUID?) -> Recipe? {
+        guard let id = id else { return nil }
+        let request = Recipe.fetchRequest() as! NSFetchRequest<Recipe>
+        request.predicate = NSPredicate(format: "%K == %@", "id", id as CVarArg)
+        guard let items = try? managedObjectContext.fetch(request) else { return nil }
+        return items.first
+    }
+    
     // Search Bar
     var body: some View {
         NavigationView {
             ScrollView (.vertical) {
                 VStack (alignment: .leading) {
-                    NavigationLink(destination: RecipeDescView(selectedRecipe: selectedRecipe), isActive: $navDesc) { EmptyView() }
+                    NavigationLink(destination: RecipeDescView(recipe: getItem(with: selectedRecipe) ), isActive: $navDesc) { EmptyView() }
                     HStack {
                         SearchBar(text: self.$searchQuery)
                         Button {
