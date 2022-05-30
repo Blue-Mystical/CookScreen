@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreData
 
-struct RecipeAddView: View {
+struct RecipeAddEditView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -19,11 +19,7 @@ struct RecipeAddView: View {
     @State private var showingPopover: Bool = false
     @State private var showingAlert: Bool = false
     
-    
     @State private var name: String = ""
-//    @State private var category: [String] = []
-    
-//    @State private var selectedCategories: [String] = []
     @State private var desc: String = ""
     @State var cookingtime: Int32 = 0
     @State private var directions: String = ""
@@ -35,6 +31,9 @@ struct RecipeAddView: View {
     @State var showImage: Bool = false
     
     @State private var selectedCategory = "Unknown"
+    
+    @State private var alertTitle = "Notice"
+    @State private var alertMessage = "A message."
     
     func ResetValues() {
         name = ""
@@ -61,24 +60,11 @@ struct RecipeAddView: View {
                             }
                         }
                     }
-//                    Picker
-//                    Button(action: {
-//                        showingPopover.toggle()
-//                    }) {
-//                        HStack {
-//                            Spacer()
-//                            Image(systemName: "chevron.right")
-//                                .font(.caption)
-//                        }
-//                    }
-//                    .popover(isPresented: $showingPopover) {
-//                        CategoryPickerView(categoryList: self.category, selectedCategories: $selectedCategories)
-//                    }
                 }
                 Section(header: Text("Description")) {
                     TextEditor(text: $desc)
                 }
-                Section(header: Text("Cooking Time")) {
+                Section(header: Text("Cooking Time (in minutes)")) {
                     TextField("in minutes", text: Binding(
                         get: { String(cookingtime) },
                         set: { cookingtime = Int32($0) ?? 0 }
@@ -91,14 +77,14 @@ struct RecipeAddView: View {
                 Section(header: Text("Ingredients")) {
                     TextEditor(text: $ingredients)
                 }
-                Section(header: Text("Nutrition")) {
+                Section(header: Text("Nutrition (in calories)")) {
                     TextField("in calories", text: Binding(
                         get: { String(nutrition) },
                         set: { nutrition = Int32($0) ?? 0 }
                     ))
                         .keyboardType(.decimalPad)
                 }
-                Section(header: Text("Yield")) {
+                Section(header: Text("Yield (in servings)")) {
                     TextField("in servings", text: Binding(
                         get: { String(yield) },
                         set: { yield = Int32($0) ?? 0 }
@@ -111,9 +97,10 @@ struct RecipeAddView: View {
                             self.showImage.toggle()
                         }) {
                             Image(uiImage: UIImage(data: self.image)!)
-                                .renderingMode(.original)
+                            .renderingMode(.original)
                             .resizable()
-                                .frame(width: 150, height: 150)
+                            .aspectRatio(contentMode: .fill)
+                            .frame(height: 150, alignment: .center)
                             .cornerRadius(12)
                         }
                     } else {
@@ -122,35 +109,49 @@ struct RecipeAddView: View {
                         }) {
                             Image(systemName: "photo.fill")
                                 .font(.system(size: 60))
+                                .frame(width: 100, height: 100, alignment: .center)
                         }
                     }
                 }
                 Section {
                     Button("Add Recipe") {
-                        let newRecipe = Recipe(context: managedObjectContext)
-                        newRecipe.id = UUID()
-                        newRecipe.name = self.name
-                        newRecipe.dateadded = Date()
-                        newRecipe.category = self.selectedCategory
-                        newRecipe.desc = self.desc
-                        newRecipe.cookingtime = self.cookingtime
-                        newRecipe.directions = self.directions
-                        newRecipe.ingredients = self.ingredients
-                        newRecipe.nutrition = self.nutrition
-                        newRecipe.yield = self.yield
-                        newRecipe.image = self.image
-                        newRecipe.favourited = false
-                        
-                        print(newRecipe)
-                        
-                        do {
-                            try self.managedObjectContext.save()
-                        } catch {
-                            print(error)
+                        if self.name == "" {
+                            self.alertTitle = "Warning"
+                            self.alertMessage = "Please add a recipe name."
+                            self.showingAlert = true
+                        } else if self.selectedCategory == "" || self.selectedCategory == "Unknown" {
+                            self.alertTitle = "Warning"
+                            self.alertMessage = "Please add a category."
+                            self.showingAlert = true
                         }
-                        print("Save completed")
-                        showingAlert = true
-                        ResetValues()
+                        else {
+                            let newRecipe = Recipe(context: managedObjectContext)
+                            newRecipe.id = UUID()
+                            newRecipe.name = self.name
+                            newRecipe.dateadded = Date()
+                            newRecipe.category = self.selectedCategory
+                            newRecipe.desc = self.desc
+                            newRecipe.cookingtime = self.cookingtime
+                            newRecipe.directions = self.directions
+                            newRecipe.ingredients = self.ingredients
+                            newRecipe.nutrition = self.nutrition
+                            newRecipe.yield = self.yield
+                            newRecipe.image = self.image
+                            newRecipe.favourited = false
+                            
+                            print(newRecipe)
+                            
+                            do {
+                                try self.managedObjectContext.save()
+                            } catch {
+                                print(error)
+                            }
+                            print("Save completed")
+                            self.alertMessage = "Successfully added a recipe."
+                            self.showingAlert = true
+                            ResetValues()
+                            
+                        }
                     }
                 }
             }
@@ -160,13 +161,13 @@ struct RecipeAddView: View {
             .navigationTitle("Add Recipe")
         }
         .alert(isPresented: $showingAlert) {
-            Alert(title: Text("Notice"), message: Text("Successfully added a recipe."), dismissButton: .default(Text("OK")))
+            Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("OK")))
         }
     }
 }
 
-struct RecipeAddView_Previews: PreviewProvider {
+struct RecipeAddEditView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeAddView(editingMode: false, recipeID: UUID())
+        RecipeAddEditView(editingMode: false, recipeID: UUID())
     }
 }

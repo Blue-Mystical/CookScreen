@@ -13,56 +13,48 @@ struct RecipeListView: View {
     
     @FetchRequest(fetchRequest: Recipe.getAllRecipes()) var recipeList:FetchedResults<Recipe>
     
-    var favouriteMode: Bool = false
+    @State var favouriteMode: Bool = false
     @State private var searchQuery: String = ""
+    
+    @State public var navDesc: Bool = false
+    @State var selectedRecipe: UUID = UUID()
     
     // Search Bar
     var body: some View {
-        ScrollView (.vertical) {
-            VStack (alignment: .leading) {
-                SearchBar(text: self.$searchQuery)
-                
-                ForEach(self.recipeList.filter({searchQuery.isEmpty ? true : $0.name!.localizedCaseInsensitiveContains(self.searchQuery)}), id: \.self) { recipe in
-                    ZStack (alignment: .topTrailing) {
-                        Image("recipePlaceholder")
-                             .resizable()
-                             .aspectRatio(contentMode: .fill)
-                             .frame(height: 150.0, alignment: .center)
-                             .clipped()
-                        Rectangle()
-                            .fill(.black)
-                            .frame(height: 150.0)
-                             .mask(
-                                LinearGradient(gradient: Gradient(colors: [.black.opacity(0), .black.opacity(0), .black.opacity(0), .red]), startPoint: .top, endPoint: .bottom)
-                             )
-                            .clipped()
-                        VStack (alignment: .trailing) {
-                            Text("Breakfast")
-                                .padding([.top, .trailing], 15)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
+        NavigationView {
+            ScrollView (.vertical) {
+                VStack (alignment: .leading) {
+                    NavigationLink(destination: RecipeDescView(selectedRecipe: selectedRecipe), isActive: $navDesc) { EmptyView() }
+                    HStack {
+                        SearchBar(text: self.$searchQuery)
+                        Button {
+                            favouriteMode.toggle()
+                        } label: {
+                            ZStack {
+                                Circle()
+                                    .foregroundColor(.white)
+                                    .frame(width: 40, height: 40)
+                                    .shadow(radius: 2)
+                                Image(systemName: "plus.circle.fill")
+                                    .resizable()
+                                    .foregroundColor(.primary)
+                                    .frame(width: 32, height: 32)
+                            }
                         }
-                        VStack (alignment: .leading) {
-                            Text("Apple Pie")
-                                .padding(EdgeInsets(top: 120, leading: 15, bottom: 0, trailing: 0))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        ZStack {
-                            Circle()
-                                .foregroundColor(.white)
-                                .frame(width: 60, height: 60)
-                                .shadow(radius: 2)
-                            Image(systemName: "suit.heart")
-                                .resizable()
-                                .foregroundColor(.primary)
-                                .frame(width: 32, height: 28)
-                        }
-                        .frame(width: 60, height: 60, alignment: .bottomTrailing)
-                        .offset(x: -15, y: 80)
+                    }.padding()
+                    
+                    ForEach(self.recipeList.filter(
+                        {(searchQuery.isEmpty ? true : $0.name!.localizedCaseInsensitiveContains(self.searchQuery)) &&
+                            (favouriteMode == false ? true : $0.favourited == true)
+                        }), id: \.self) { recipe in
+                        RecipeRowView(name: recipe.name!, category: recipe.category!, image: recipe.image ?? .init(count: 0), favourited: recipe.favourited, itemID: recipe.id!, navDesc: $navDesc, selectID: $selectedRecipe)
                     }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
             }
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarHidden(true)
@@ -71,6 +63,6 @@ struct RecipeListView: View {
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeListView(favouriteMode: false)
+        RecipeListView()
     }
 }

@@ -9,8 +9,7 @@ import SwiftUI
 
 public enum Tab {
     case recipetab
-    case favtab
-    case addrecipetab
+    case shoppingtab
     case categorytab
     case settingstab
 }
@@ -25,24 +24,28 @@ struct TabButtonStyle : ButtonStyle {
 
 // Main screen view and navigation
 struct ContentView: View {
-    @State private var selectedTab: Tab = .recipetab
+    @State public var selectedTab: Tab = .recipetab
+    @State public var navSelection: String? = nil
     
     var body: some View {
-        VStack {
-            switch selectedTab {
-            case .recipetab:
-                RecipeListView(favouriteMode: false)
-            case .favtab:
-                RecipeListView(favouriteMode: true)
-            case .addrecipetab:
-                RecipeAddView(editingMode: false, recipeID: UUID())
-            case .categorytab:
-                CategoryListView()
-            case .settingstab:
-                SettingsView()
+        NavigationView {
+            VStack {
+                NavigationLink(destination: RecipeAddEditView(editingMode: false), tag: "add", selection: $navSelection) { EmptyView() }
+                switch selectedTab {
+                case .recipetab:
+                    RecipeListView()
+                case .shoppingtab:
+                    ShoppingListView()
+        //      case .addrecipetab:
+        //          RecipeAddEditView(editingMode: false, recipeID: UUID())
+                case .categorytab:
+                        CategoryListView()
+                case .settingstab:
+                    SettingsView()
+                }
+                NavBar(selectedTab: $selectedTab, navSelection: $navSelection)
+                    .frame(height: 50)
             }
-            NavBar(selectedTab: $selectedTab)
-                .frame(height: 50)
         }
     }
 }
@@ -50,6 +53,7 @@ struct ContentView: View {
 // Navigation Tab with a big 'add' button in the middle
 struct NavBar: View {
     @Binding var selectedTab: Tab
+    @Binding var navSelection: String?
     var body: some View {
         HStack {
             Spacer()
@@ -71,22 +75,23 @@ struct NavBar: View {
                 Spacer()
                 // favourite recipe tab
                 Button {
-                    selectedTab = .favtab
+                    selectedTab = .shoppingtab
                 } label: {
                     VStack {
-                        Image(systemName: "suit.heart")
+                        Image(systemName: "list.bullet.rectangle.portrait")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
-                        Text("Favourite")
+                        Text("Buy List")
                             .font(.caption2)
                     }
-                    .foregroundColor(selectedTab == .favtab ? .blue : .primary)
+                    .foregroundColor(selectedTab == .shoppingtab ? .blue : .primary)
                 }
             }
             // Add recipe button
+            Spacer()
             Button {
-                selectedTab = .addrecipetab
+                navSelection = "add"
             } label: {
                 ZStack {
                     Circle()

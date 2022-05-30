@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct RecipeDescView: View {
+    @State var selectedRecipe: UUID
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button {
+            print(selectedRecipe)
+        } label: {
+            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        }
     }
 }
 
 struct RecipeDescView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDescView()
+        RecipeDescView(selectedRecipe: UUID())
     }
 }
