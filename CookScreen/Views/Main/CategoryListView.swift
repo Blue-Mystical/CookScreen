@@ -16,9 +16,13 @@ struct CategoryListView: View {
     
     @State private var categoryField: String = ""
     
+    @State var categoryFilter: String = ""
+    @State public var navFilteredList: Bool = false
+    
     var body: some View {
         NavigationView {
             VStack {
+                NavigationLink(destination: RecipeListView(categoryFilter: self.categoryFilter), isActive: $navFilteredList) { EmptyView() }
                 HStack {
                     TextField("Add category", text: self.$categoryField)
                         .textFieldStyle(.roundedBorder)
@@ -52,7 +56,7 @@ struct CategoryListView: View {
                 .padding()
                 List {
                     ForEach(self.categoryList) { item in
-                        CategoryRowView(name: item.name!)
+                        CategoryRowView(name: item.name!, navFilteredList: $navFilteredList, selectCategory: $categoryFilter)
                     }.onDelete { indexSet in
                         let deleteItem = self.categoryList[indexSet.first!]
                         self.managedObjectContext.delete(deleteItem)
@@ -64,9 +68,9 @@ struct CategoryListView: View {
                     }
                 }
             }
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(true)
         }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
     }
 }
 

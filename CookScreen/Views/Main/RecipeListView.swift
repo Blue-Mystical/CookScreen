@@ -14,6 +14,7 @@ struct RecipeListView: View {
     @FetchRequest(fetchRequest: Recipe.getAllRecipes()) var recipeList:FetchedResults<Recipe>
     
     @State var favouriteMode: Bool = false
+    @State var categoryFilter: String = ""
     @State private var searchQuery: String = ""
     
     @State public var navDesc: Bool = false
@@ -32,7 +33,7 @@ struct RecipeListView: View {
         NavigationView {
             ScrollView (.vertical) {
                 VStack (alignment: .leading) {
-                    NavigationLink(destination: RecipeDescView(recipe: getItem(with: selectedRecipe) ), isActive: $navDesc) { EmptyView() }
+                    NavigationLink(destination: RecipeDescView(recipe: getItem(with: selectedRecipe), navDesc: $navDesc), isActive: $navDesc) { EmptyView() }
                     HStack {
                         SearchBar(text: self.$searchQuery)
                         Button {
@@ -52,8 +53,10 @@ struct RecipeListView: View {
                     }.padding()
                     
                     ForEach(self.recipeList.filter(
-                        {(searchQuery.isEmpty ? true : $0.name!.localizedCaseInsensitiveContains(self.searchQuery)) &&
-                            (favouriteMode == false ? true : $0.favourited == true)
+                        {
+                            (searchQuery.isEmpty ? true : $0.name!.localizedCaseInsensitiveContains(self.searchQuery)) &&
+                            (favouriteMode == false ? true : $0.favourited == true) &&
+                            (categoryFilter.isEmpty ? true : $0.category == self.categoryFilter)
                         }), id: \.self) { recipe in
                         RecipeRowView(name: recipe.name!, category: recipe.category!, image: recipe.image ?? .init(count: 0), favourited: recipe.favourited, itemID: recipe.id!, navDesc: $navDesc, selectID: $selectedRecipe)
                     }
@@ -61,10 +64,9 @@ struct RecipeListView: View {
                     Spacer()
                 }
             }
-            .navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
         }
-        .navigationBarTitle("", displayMode: .inline)
+//        .navigationBarTitle(categoryFilter, displayMode: .inline)
         .navigationBarHidden(true)
     }
 }

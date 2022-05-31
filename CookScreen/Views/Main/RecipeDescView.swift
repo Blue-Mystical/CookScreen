@@ -11,7 +11,9 @@ import CoreData
 struct RecipeDescView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
+    @State private var showingAlert: Bool = false
     @State var recipe: Recipe?
+    @Binding var navDesc: Bool
 
     var body: some View {
         ScrollView (.vertical) {
@@ -70,14 +72,33 @@ struct RecipeDescView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
+                                .padding([.leading], 5)
                         }
                         Button {
-                            print("Delete")
+                            
                         } label: {
                             Image(systemName: "trash.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
+                                .padding([.leading], 5)
+                                .onTapGesture {
+                                    self.showingAlert = true
+                                }.confirmationDialog("Sure?", isPresented: $showingAlert) {
+                                    Button("Delete", role: .destructive) {
+                                        managedObjectContext.delete(recipe!)
+                                        do {
+                                            try self.managedObjectContext.save()
+                                        } catch {
+                                            print(error)
+                                        }
+                                        
+                                        self.navDesc.toggle()
+                                    }
+                                    Button("Cancel", role: .cancel) {}
+                                } message: {
+                                    Text("Are you sure?")
+                                }
                         }
                         Button {
                             recipe?.favourited.toggle()
@@ -95,11 +116,29 @@ struct RecipeDescView: View {
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
                         }
-                        .padding([.trailing], 14)
+                        .padding([.trailing], 20)
                     }
                 }
                 Text(recipe?.desc ?? "Description")
-                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
+                    .padding([.top], 10)
+                VStack (alignment: .leading) {
+                    Text("Directions")
+                        .padding([.top], 5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(recipe?.directions ?? "Placeholder")
+                        .padding([.top], 3)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding([.leading], 20)
+                VStack (alignment: .leading) {
+                    Text("Ingredients")
+                        .padding([.top], 5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text(recipe?.ingredients ?? "Placeholder")
+                        .padding([.top], 3)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding([.leading], 20)
             }
         }
     }
