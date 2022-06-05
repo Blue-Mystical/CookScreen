@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+// Core Data functions for Category Entity
 public class Category:NSManagedObject, Identifiable {
     @NSManaged public var dateAdded: Date?
     @NSManaged public var name: String?
@@ -15,6 +16,7 @@ public class Category:NSManagedObject, Identifiable {
 
 extension Category {
     
+    // Get all categories
     static func getAllCategories() -> NSFetchRequest<Category> {
         let request:NSFetchRequest<Category> = Category.fetchRequest() as! NSFetchRequest<Category>
         

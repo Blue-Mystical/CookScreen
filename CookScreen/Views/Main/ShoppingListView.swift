@@ -17,7 +17,6 @@ struct ShoppingListView: View {
     @State private var itemField: String = ""
     
     var body: some View {
-        NavigationView {
             VStack {
                 HStack {
                     TextField("Add item", text: self.$itemField)
@@ -50,10 +49,12 @@ struct ShoppingListView: View {
 
                 }
                 .padding()
+                // Get items
                 List {
                     ForEach(self.itemList) { item in
                         ShoppingRowView(name: item.name!)
                     }.onDelete { indexSet in
+                        // Deletes item be swiping left and press "Delete"
                         let deleteItem = self.itemList[indexSet.first!]
                         self.managedObjectContext.delete(deleteItem)
                         do {
@@ -66,7 +67,6 @@ struct ShoppingListView: View {
             }
             .navigationBarTitle("", displayMode: .inline)
             .navigationBarHidden(true)
-        }
     }
 }
 

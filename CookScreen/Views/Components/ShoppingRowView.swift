@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Single shopping item Row
+
 struct ShoppingRowView: View {
     var name: String = ""
     

@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+// Image picker function
 struct ImagePicker : UIViewControllerRepresentable {
     @Binding var showImage : Bool
     @Binding var image : Data

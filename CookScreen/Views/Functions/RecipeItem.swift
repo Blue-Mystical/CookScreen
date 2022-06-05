@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+// Core Data functions for Recipe Entity
 public class Recipe:NSManagedObject, Identifiable {
     @NSManaged public var category: String?
     @NSManaged public var cookingtime: Int32
@@ -25,6 +26,7 @@ public class Recipe:NSManagedObject, Identifiable {
 
 extension Recipe {
     
+    // Get all recipe
     static func getAllRecipes() -> NSFetchRequest<Recipe> {
         let request:NSFetchRequest<Recipe> = Recipe.fetchRequest() as! NSFetchRequest<Recipe>
         

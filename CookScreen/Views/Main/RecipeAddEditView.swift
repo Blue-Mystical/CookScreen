@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 
+// Tab used for adding a new recipe or editing an existing recipe. (the latter is not implemented)
 struct RecipeAddEditView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -35,6 +36,7 @@ struct RecipeAddEditView: View {
     @State private var alertTitle = "Notice"
     @State private var alertMessage = "A message."
     
+    // Reset values after adding a new recipe
     func ResetValues() {
         name = ""
         desc = ""
@@ -52,7 +54,7 @@ struct RecipeAddEditView: View {
                     TextField("Name", text: $name)
                 }
                 Section(header: Text("Category")) {
-                    
+                    // Fetch categories the user created into the picker
                     VStack {
                         Picker("Category", selection: $selectedCategory) {
                             ForEach(categoryList, id: \.self) { (catitem: Category) in
@@ -65,6 +67,7 @@ struct RecipeAddEditView: View {
                     TextEditor(text: $desc)
                 }
                 Section(header: Text("Cooking Time (in minutes)")) {
+                    // Limits the field to accept only number and to prevent nil values
                     TextField("in minutes", text: Binding(
                         get: { String(cookingtime) },
                         set: { cookingtime = Int32($0) ?? 0 }
@@ -78,6 +81,7 @@ struct RecipeAddEditView: View {
                     TextEditor(text: $ingredients)
                 }
                 Section(header: Text("Nutrition (in calories)")) {
+                    // Limits the field to accept only number and to prevent nil values
                     TextField("in calories", text: Binding(
                         get: { String(nutrition) },
                         set: { nutrition = Int32($0) ?? 0 }
@@ -85,6 +89,7 @@ struct RecipeAddEditView: View {
                         .keyboardType(.decimalPad)
                 }
                 Section(header: Text("Yield (in servings)")) {
+                    // Limits the field to accept only number and to prevent nil values
                     TextField("in servings", text: Binding(
                         get: { String(yield) },
                         set: { yield = Int32($0) ?? 0 }
@@ -93,6 +98,7 @@ struct RecipeAddEditView: View {
                 }
                 Section(header: Text("Image")) {
                     if self.image.count != 0 {
+                        // Displays image when the user added it in
                         Button(action: {
                             self.showImage.toggle()
                         }) {
@@ -104,6 +110,7 @@ struct RecipeAddEditView: View {
                             .cornerRadius(12)
                         }
                     } else {
+                        // Shows an icon when the user hasn't add an image yet
                         Button(action: {
                             self.showImage.toggle()
                         }) {
@@ -114,7 +121,9 @@ struct RecipeAddEditView: View {
                     }
                 }
                 Section {
+                    // Do the add recipe function
                     Button("Add Recipe") {
+                        // recipe name and category must not be empty
                         if self.name == "" {
                             self.alertTitle = "Warning"
                             self.alertMessage = "Please add a recipe name."
@@ -125,6 +134,7 @@ struct RecipeAddEditView: View {
                             self.showingAlert = true
                         }
                         else {
+                            // Create object and save
                             let newRecipe = Recipe(context: managedObjectContext)
                             newRecipe.id = UUID()
                             newRecipe.name = self.name
@@ -160,6 +170,8 @@ struct RecipeAddEditView: View {
             })
             .navigationTitle("Add Recipe")
         }
+        .navigationBarTitle("", displayMode: .inline)
+        // in-view alert box with custom texts
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(self.alertTitle), message: Text(self.alertMessage), dismissButton: .default(Text("OK")))
         }

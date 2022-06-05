@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 
+// Lists categories and lets the user find recipes based on a chosen category
 struct CategoryListView: View {
     
     @Environment(\.managedObjectContext) var managedObjectContext
@@ -54,10 +55,12 @@ struct CategoryListView: View {
 
                 }
                 .padding()
+                // Show categories
                 List {
                     ForEach(self.categoryList) { item in
                         CategoryRowView(name: item.name!, navFilteredList: $navFilteredList, selectCategory: $categoryFilter)
                     }.onDelete { indexSet in
+                        // Deletes category be swiping left and press "Delete"
                         let deleteItem = self.categoryList[indexSet.first!]
                         self.managedObjectContext.delete(deleteItem)
                         do {
@@ -68,6 +71,8 @@ struct CategoryListView: View {
                     }
                 }
             }
+            .navigationBarTitle("", displayMode: .inline)
+            .navigationBarHidden(true)
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarHidden(true)

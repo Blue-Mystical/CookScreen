@@ -15,7 +15,7 @@ struct CookScreenApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-            // load data controller
+            // load data controller for ContentView
                 .environment(\.managedObjectContext, dataContainer.viewContext)
         }
     }

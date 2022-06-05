@@ -8,6 +8,7 @@
 import SwiftUI
 import CoreData
 
+// The recipe list
 struct RecipeListView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -20,6 +21,7 @@ struct RecipeListView: View {
     @State public var navDesc: Bool = false
     @State var selectedRecipe: UUID = UUID()
     
+    // Get recipe content before moving on to the description page by comparing UUID
     func getItem(with id: UUID?) -> Recipe? {
         guard let id = id else { return nil }
         let request = Recipe.fetchRequest() as! NSFetchRequest<Recipe>
@@ -28,14 +30,16 @@ struct RecipeListView: View {
         return items.first
     }
     
-    // Search Bar
+    
     var body: some View {
-        NavigationView {
             ScrollView (.vertical) {
                 VStack (alignment: .leading) {
+                    // Link to Recipe Detail view
                     NavigationLink(destination: RecipeDescView(recipe: getItem(with: selectedRecipe), navDesc: $navDesc), isActive: $navDesc) { EmptyView() }
                     HStack {
+                        //Display Search Bar
                         SearchBar(text: self.$searchQuery)
+                        // Toggle favourite mode
                         Button {
                             favouriteMode.toggle()
                         } label: {
@@ -52,6 +56,7 @@ struct RecipeListView: View {
                         }
                     }.padding()
                     
+                    // Recipe list itself. It will filter based on query if there's any, while also filter if the recipe has been favourited or not. Also if the list is displayed inside the categories tab, it will also filter to the chosen category too.
                     ForEach(self.recipeList.filter(
                         {
                             (searchQuery.isEmpty ? true : $0.name!.localizedCaseInsensitiveContains(self.searchQuery)) &&
@@ -65,9 +70,6 @@ struct RecipeListView: View {
                 }
             }
             .navigationBarHidden(true)
-        }
-//        .navigationBarTitle(categoryFilter, displayMode: .inline)
-        .navigationBarHidden(true)
     }
 }
 

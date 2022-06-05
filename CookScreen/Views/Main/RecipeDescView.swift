@@ -8,12 +8,34 @@
 import SwiftUI
 import CoreData
 
+// Recipe details, includes edit, delete and fav.
+// Also I don't know how to even unwrap the Recipe variable properly
 struct RecipeDescView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
     @State private var showingAlert: Bool = false
+    @State private var showingNotice: Bool = false
     @State var recipe: Recipe?
     @Binding var navDesc: Bool
+    
+    @State private var noticeTitle = "Notice"
+    @State private var noticeMessage = "A message."
+    
+    func FavouriteRecipe () {
+        recipe?.favourited.toggle()
+        print(recipe?.favourited ?? false)
+        
+        // I don't even know how unwrap value in swift
+        // SwiftUI is being a jerk. If I don't show notice here the fav button won't update
+        self.noticeMessage = "(Un)favourited the recipe."
+        self.showingNotice = true
+        
+        do {
+            try self.managedObjectContext.save()
+        } catch {
+            print(error)
+        }
+    }
 
     var body: some View {
         ScrollView (.vertical) {
@@ -26,6 +48,7 @@ struct RecipeDescView: View {
                         .frame(width: 300.0, height: 250.0, alignment: .center)
                         .clipped()
                 } else {
+                    // Use apple pie image as placeholder.
                     Image("recipePlaceholder")
                         .resizable()
                         .aspectRatio(contentMode: .fill)
@@ -33,6 +56,7 @@ struct RecipeDescView: View {
                         .clipped()
                 }
                 HStack {
+                    // Cooking time
                     VStack {
                         Image(systemName: "clock")
                             .resizable()
@@ -42,29 +66,33 @@ struct RecipeDescView: View {
                         Text("MINS")
                             .frame(maxWidth: .infinity)
                     }
+                    // Energy Yield
                     VStack {
                         Image(systemName: "bolt")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
-                        Text(String(recipe?.cookingtime ?? 0) )
+                        Text(String(recipe?.nutrition ?? 0) )
                         Text("CALS")
                             .frame(maxWidth: .infinity)
                     }
+                    // Servings
                     VStack {
-                        Image(systemName: "clock")
+                        Image(systemName: "person")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 25, height: 25)
-                        Text(String(recipe?.cookingtime ?? 0) )
+                        Text(String(recipe?.yield ?? 0) )
                         Text("SERVINGS")
                             .frame(maxWidth: .infinity)
                     }
                 }
                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                 VStack (alignment: .trailing) {
+                    // 3 Options: Edit, Delete and Favourite
                     HStack {
                         Spacer()
+                        // Editing function hasn't been implemented
                         Button {
                             print("Edit mockups")
                         } label: {
@@ -74,6 +102,7 @@ struct RecipeDescView: View {
                                 .frame(width: 32, height: 32)
                                 .padding([.leading], 5)
                         }
+                        // Delete recipe with confirmation
                         Button {
                             
                         } label: {
@@ -100,16 +129,9 @@ struct RecipeDescView: View {
                                     Text("Are you sure?")
                                 }
                         }
+                        // Toggle favourite
                         Button {
-                            recipe?.favourited.toggle()
-                            print(recipe?.favourited ?? false)
-                            
-                            do {
-                                try self.managedObjectContext.save()
-                            } catch {
-                                print(error)
-                            }
-                            
+                            FavouriteRecipe()
                         } label: {
                             Image(systemName: (recipe?.favourited ?? false) ? "suit.heart.fill" : "suit.heart")
                                 .resizable()
@@ -119,8 +141,10 @@ struct RecipeDescView: View {
                         .padding([.trailing], 20)
                     }
                 }
+                // Recipe description
                 Text(recipe?.desc ?? "Description")
                     .padding([.top], 10)
+                // Directions
                 VStack (alignment: .leading) {
                     Text("Directions")
                         .padding([.top], 5)
@@ -129,6 +153,7 @@ struct RecipeDescView: View {
                         .padding([.top], 3)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                // Ingredients
                 .padding([.leading], 20)
                 VStack (alignment: .leading) {
                     Text("Ingredients")
@@ -141,6 +166,8 @@ struct RecipeDescView: View {
                 .padding([.leading], 20)
             }
         }
+        .alert(isPresented: $showingNotice) {
+            Alert(title: Text(self.noticeTitle), message: Text(self.noticeMessage), dismissButton: .default(Text("OK")))
+        }
     }
 }
-

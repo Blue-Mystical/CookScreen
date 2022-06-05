@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Tab enums
 public enum Tab {
     case recipetab
     case shoppingtab
@@ -14,6 +15,7 @@ public enum Tab {
     case settingstab
 }
 
+// Add recipe button style
 struct TabButtonStyle : ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -30,23 +32,31 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: RecipeAddEditView(editingMode: false), tag: "add", selection: $navSelection) { EmptyView() }
-                switch selectedTab {
-                case .recipetab:
-                    RecipeListView()
-                case .shoppingtab:
-                    ShoppingListView()
-        //      case .addrecipetab:
-        //          RecipeAddEditView(editingMode: false, recipeID: UUID())
-                case .categorytab:
-                        CategoryListView()
-                case .settingstab:
-                    SettingsView()
+                ZStack {
+                    // Main display tab that displays different view based on current tab (except for add recipe view which uses navigation link right below)
+                    NavigationLink(destination: RecipeAddEditView(editingMode: false), tag: "add", selection: $navSelection) { EmptyView() }
+                    switch selectedTab {
+                    case .recipetab:
+                        RecipeListView()
+                    case .shoppingtab:
+                        ShoppingListView()
+                    case .categorytab:
+                            CategoryListView()
+                    case .settingstab:
+                        SettingsView()
+                    }
+                    // Planned to add in fading animation
+//                    Rectangle()
+//                        .fill(.white)
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
+                // Navigation bar
                 NavBar(selectedTab: $selectedTab, navSelection: $navSelection)
                     .frame(height: 50)
             }
         }
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarHidden(true)
     }
 }
 
@@ -88,7 +98,7 @@ struct NavBar: View {
                     .foregroundColor(selectedTab == .shoppingtab ? .blue : .primary)
                 }
             }
-            // Add recipe button
+            // Add recipe button. This changes navSelection to "add" and unrelated to normal Tab values
             Spacer()
             Button {
                 navSelection = "add"

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// Search Bar UI with function for recipe name filtering
 struct SearchBar: UIViewRepresentable {
     @Binding var text: String
     class Coordinator: NSObject, UISearchBarDelegate {

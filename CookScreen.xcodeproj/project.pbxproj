@@ -27,6 +27,7 @@
 		3A3A79442844F863002FB1EA /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A79432844F863002FB1EA /* ShoppingListView.swift */; };
 		3A3A79462844F938002FB1EA /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A79452844F938002FB1EA /* ShoppingItem.swift */; };
 		3A3A79482844F9CA002FB1EA /* ShoppingRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A79472844F9CA002FB1EA /* ShoppingRowView.swift */; };
+		3A3A794C284D0B0D002FB1EA /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A794B284D0B0C002FB1EA /* AboutMeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		3A3A79432844F863002FB1EA /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
 		3A3A79452844F938002FB1EA /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		3A3A79472844F9CA002FB1EA /* ShoppingRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingRowView.swift; sourceTree = "<group>"; };
+		3A3A794B284D0B0C002FB1EA /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +132,10 @@
 				34E5716C2816B2BB00A2A27E /* RecipeListView.swift */,
 				347B1E742819A6C2008E47AC /* RecipeDescView.swift */,
 				34E5716E2816B2CB00A2A27E /* RecipeAddEditView.swift */,
+				3A3A79432844F863002FB1EA /* ShoppingListView.swift */,
 				347B1E782819AAA5008E47AC /* CategoryListView.swift */,
 				34E571742816D43000A2A27E /* SettingsView.swift */,
-				3A3A79432844F863002FB1EA /* ShoppingListView.swift */,
+				3A3A794B284D0B0C002FB1EA /* AboutMeView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3A79462844F938002FB1EA /* ShoppingItem.swift in Sources */,
+				3A3A794C284D0B0D002FB1EA /* AboutMeView.swift in Sources */,
 				3A3A79442844F863002FB1EA /* ShoppingListView.swift in Sources */,
 				3A3A79412844D40C002FB1EA /* RecipeRowView.swift in Sources */,
 				345CB2CF282153D600C7A89C /* RecipeItem.swift in Sources */,

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// Single recipe Row, that changes tab to detail tab upon tapping on it using bindings
+
 struct RecipeRowView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     
@@ -27,6 +29,7 @@ struct RecipeRowView: View {
             } label: {
                 VStack {
                     ZStack (alignment: .topTrailing) {
+                        // Shows image if the recipe has user-added image
                         if self.image.count != 0 {
                             Image(uiImage: UIImage(data: self.image)!)
                                 .resizable()
@@ -34,6 +37,7 @@ struct RecipeRowView: View {
                                 .frame(height: 150.0, alignment: .center)
                                 .clipped()
                         } else {
+                            // placeholder if the user doesn't put any
                             Image("recipePlaceholder")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -41,6 +45,7 @@ struct RecipeRowView: View {
                                 .clipped()
                         }
                         
+                        // Gradient shadow
                         Rectangle()
                             .fill(.black)
                             .frame(height: 150.0)
@@ -48,11 +53,13 @@ struct RecipeRowView: View {
                                 LinearGradient(gradient: Gradient(colors: [.black.opacity(0), .black.opacity(0), .black.opacity(0), .red]), startPoint: .top, endPoint: .bottom)
                              )
                             .clipped()
+                        // Category
                         VStack (alignment: .trailing) {
                             Text(self.category)
                                 .padding([.top, .trailing], 15)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }
+                        // Name
                         VStack (alignment: .leading) {
                             Text(self.name)
                                 .padding(EdgeInsets(top: 120, leading: 15, bottom: 0, trailing: 0))
@@ -61,6 +68,8 @@ struct RecipeRowView: View {
                     }
                 }
             }
+            
+            // [UNUSED] favourite button, it doesn't update when the user taps on it
             
 //                ZStack {
 //                    Circle()

@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+// Core Data functions for Shopping item Entity
 public class ShoppingItem:NSManagedObject, Identifiable {
     @NSManaged public var dateAdded: Date?
     @NSManaged public var name: String?

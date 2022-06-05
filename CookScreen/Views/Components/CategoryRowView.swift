@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Single category Row, with an ability to switch view to category-filtered recipe list with bindings
 struct CategoryRowView: View {
     var name: String = ""
     
