@@ -47,7 +47,7 @@ struct RecipeRowView: View {
                         
                         // Gradient shadow
                         Rectangle()
-                            .fill(.black)
+                            .fill(Color.ui.cream5)
                             .frame(height: 150.0)
                              .mask(
                                 LinearGradient(gradient: Gradient(colors: [.black.opacity(0), .black.opacity(0), .black.opacity(0), .red]), startPoint: .top, endPoint: .bottom)
@@ -56,13 +56,16 @@ struct RecipeRowView: View {
                         // Category
                         VStack (alignment: .trailing) {
                             Text(self.category)
+                                .font(.system(size: 20, design: .default))
                                 .padding([.top, .trailing], 15)
+                                .shadow(color: .black, radius: 5)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                         }
                         // Name
                         VStack (alignment: .leading) {
                             Text(self.name)
-                                .padding(EdgeInsets(top: 120, leading: 15, bottom: 0, trailing: 0))
+                                .font(.system(size: 26, weight: .bold, design: .default))
+                                .padding(EdgeInsets(top: 108, leading: 15, bottom: 0, trailing: 0))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
@@ -102,6 +105,7 @@ struct RecipeRowView: View {
 //                .frame(width: 60, height: 60, alignment: .bottomTrailing)
 //                .offset(x: -15, y: 80)
         }
+        .foregroundColor(Color.ui.white)
     }
 }
 

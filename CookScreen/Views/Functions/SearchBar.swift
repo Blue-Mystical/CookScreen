@@ -31,6 +31,10 @@ struct SearchBar: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
+        searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchBar.backgroundColor = UIColor(named: "Cream1")
+        searchBar.searchTextField.backgroundColor = .white
+        searchBar.isTranslucent = false
         searchBar.delegate = context.coordinator
         searchBar.autocapitalizationType = .words
         searchBar.placeholder = "Search recipe..."

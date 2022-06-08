@@ -14,22 +14,35 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                NavigationLink(destination: AboutMeView(), tag: "aboutme", selection: $navSettingSelection) { EmptyView() }
-                Text("CookScreen Version 0.0.1")
-                List {
-                    VStack(alignment: .leading){
-                        Button {
-                            self.navSettingSelection = "aboutme"
-                        } label: {
-                            Text("About us")
-                                .font(.headline)
+            ZStack {
+                Color.ui.cream3
+                    .ignoresSafeArea()
+                VStack {
+                    NavigationLink(destination: AboutMeView(), tag: "aboutme", selection: $navSettingSelection) { EmptyView() }
+                    Text("CookScreen 0.0.1")
+                        .font(.system(size: 20, design: .default))
+                        .foregroundColor(Color.ui.white)
+                    List {
+                        VStack(alignment: .leading){
+                            Button {
+                                self.navSettingSelection = "aboutme"
+                            } label: {
+                                Text("About Me")
+                                    .font(.headline)
+                            }
                         }
                     }
+                    .background(Color.ui.cream1)
+                    .onAppear { // Allows to change background color of the list
+                      UITableView.appearance().backgroundColor = .clear
+                    }
+//                    .onDisappear {
+//                      UITableView.appearance().backgroundColor = .systemGroupedBackground
+//                    }
                 }
+                .navigationBarTitle("", displayMode: .inline)
+                .navigationBarHidden(true)
             }
-            .navigationBarTitle("", displayMode: .inline)
-            .navigationBarHidden(true)
         }
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarHidden(true)

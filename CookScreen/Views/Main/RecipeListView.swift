@@ -32,6 +32,9 @@ struct RecipeListView: View {
     
     
     var body: some View {
+        ZStack {
+            Color.ui.cream1
+                .ignoresSafeArea()
             ScrollView (.vertical) {
                 VStack (alignment: .leading) {
                     // Link to Recipe Detail view
@@ -48,13 +51,14 @@ struct RecipeListView: View {
                                     .foregroundColor(.white)
                                     .frame(width: 40, height: 40)
                                     .shadow(radius: 2)
-                                Image(systemName: "plus.circle.fill")
+                                Image(systemName: self.favouriteMode ? "suit.heart.fill" : "suit.heart")
                                     .resizable()
-                                    .foregroundColor(.primary)
-                                    .frame(width: 32, height: 32)
+                                    .foregroundColor(self.favouriteMode ? Color.ui.pink : Color.ui.cream5)
+                                    .frame(width: 22, height: 20)
                             }
                         }
-                    }.padding()
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                     
                     // Recipe list itself. It will filter based on query if there's any, while also filter if the recipe has been favourited or not. Also if the list is displayed inside the categories tab, it will also filter to the chosen category too.
                     ForEach(self.recipeList.filter(
@@ -70,6 +74,7 @@ struct RecipeListView: View {
                 }
             }
             .navigationBarHidden(true)
+        }
     }
 }
 

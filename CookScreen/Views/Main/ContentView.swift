@@ -33,6 +33,8 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 ZStack {
+                    Color.ui.cream1
+                        .ignoresSafeArea()
                     // Main display tab that displays different view based on current tab (except for add recipe view which uses navigation link right below)
                     NavigationLink(destination: RecipeAddEditView(editingMode: false), tag: "add", selection: $navSelection) { EmptyView() }
                     switch selectedTab {
@@ -55,6 +57,7 @@ struct ContentView: View {
                     .frame(height: 50)
             }
         }
+        .accentColor(Color.ui.cream5)
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarHidden(true)
     }
@@ -65,89 +68,93 @@ struct NavBar: View {
     @Binding var selectedTab: Tab
     @Binding var navSelection: String?
     var body: some View {
-        HStack {
-            Spacer()
-            Group {
-                // Home or recipe tab
-                Button {
-                    selectedTab = .recipetab
-                } label: {
-                    VStack {
-                        Image(systemName: "house")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        Text("Recipes")
-                            .font(.caption2)
+        ZStack {
+            Color.ui.cream3
+                .ignoresSafeArea()
+            HStack {
+                Spacer()
+                Group {
+                    // Home or recipe tab
+                    Button {
+                        selectedTab = .recipetab
+                    } label: {
+                        VStack {
+                            Image(systemName: "house")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                            Text("Recipes")
+                                .font(.caption2)
+                        }
+                        .foregroundColor(selectedTab == .recipetab ? Color.ui.cream5 : .white)
                     }
-                    .foregroundColor(selectedTab == .recipetab ? .blue : .primary)
+                    Spacer()
+                    // favourite recipe tab
+                    Button {
+                        selectedTab = .shoppingtab
+                    } label: {
+                        VStack {
+                            Image(systemName: "list.bullet.rectangle.portrait")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                            Text("Buy List")
+                                .font(.caption2)
+                        }
+                        .foregroundColor(selectedTab == .shoppingtab ? Color.ui.cream5 : .white)
+                    }
+                }
+                // Add recipe button. This changes navSelection to "add" and unrelated to normal Tab values
+                Spacer()
+                Button {
+                    navSelection = "add"
+                } label: {
+                    ZStack {
+                        Circle()
+                            .foregroundColor(Color.ui.cream5)
+                            .frame(width: 80, height: 80)
+                            .shadow(radius: 2)
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .foregroundColor(.white)
+                            .frame(width: 72, height: 72)
+                    }
+                    .offset(y: -32)
+                }
+                .buttonStyle(TabButtonStyle())
+                Group {
+                    // category recipe tab
+                    Button {
+                        selectedTab = .categorytab
+                    } label: {
+                        VStack {
+                            Image(systemName: "tag")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                            Text("Categories")
+                                .font(.caption2)
+                        }
+                        .foregroundColor(selectedTab == .categorytab ? Color.ui.cream5 : .white)
+                    }
+                    Spacer()
+                    // settings tab
+                    Button {
+                        selectedTab = .settingstab
+                    } label: {
+                        VStack {
+                            Image(systemName: "gearshape")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 25, height: 25)
+                            Text("Settings")
+                                .font(.caption2)
+                        }
+                        .foregroundColor(selectedTab == .settingstab ? Color.ui.cream5 : .white)
+                    }
                 }
                 Spacer()
-                // favourite recipe tab
-                Button {
-                    selectedTab = .shoppingtab
-                } label: {
-                    VStack {
-                        Image(systemName: "list.bullet.rectangle.portrait")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        Text("Buy List")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(selectedTab == .shoppingtab ? .blue : .primary)
-                }
             }
-            // Add recipe button. This changes navSelection to "add" and unrelated to normal Tab values
-            Spacer()
-            Button {
-                navSelection = "add"
-            } label: {
-                ZStack {
-                    Circle()
-                        .foregroundColor(.white)
-                        .frame(width: 80, height: 80)
-                        .shadow(radius: 2)
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .foregroundColor(.primary)
-                        .frame(width: 72, height: 72)
-                }
-                .offset(y: -32)
-            }
-            .buttonStyle(TabButtonStyle())
-            Group {
-                // category recipe tab
-                Button {
-                    selectedTab = .categorytab
-                } label: {
-                    VStack {
-                        Image(systemName: "tag")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        Text("Categories")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(selectedTab == .categorytab ? .blue : .primary)
-                }
-                Spacer()
-                // settings tab
-                Button {
-                    selectedTab = .settingstab
-                } label: {
-                    VStack {
-                        Image(systemName: "gearshape")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        Text("Settings")
-                            .font(.caption2)
-                    }
-                    .foregroundColor(selectedTab == .settingstab ? .blue : .primary)
-                }
-            }
-            Spacer()
         }
     }
 }

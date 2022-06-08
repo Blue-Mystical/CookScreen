@@ -28,6 +28,7 @@
 		3A3A79462844F938002FB1EA /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A79452844F938002FB1EA /* ShoppingItem.swift */; };
 		3A3A79482844F9CA002FB1EA /* ShoppingRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A79472844F9CA002FB1EA /* ShoppingRowView.swift */; };
 		3A3A794C284D0B0D002FB1EA /* AboutMeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A794B284D0B0C002FB1EA /* AboutMeView.swift */; };
+		3A3A794E284F4530002FB1EA /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A794D284F452F002FB1EA /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		3A3A79452844F938002FB1EA /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
 		3A3A79472844F9CA002FB1EA /* ShoppingRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingRowView.swift; sourceTree = "<group>"; };
 		3A3A794B284D0B0C002FB1EA /* AboutMeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMeView.swift; sourceTree = "<group>"; };
+		3A3A794D284F452F002FB1EA /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				3A3A79452844F938002FB1EA /* ShoppingItem.swift */,
 				345CB2D428215DD200C7A89C /* ImagePicker.swift */,
 				345CB2D828223A1E00C7A89C /* SearchBar.swift */,
+				3A3A794D284F452F002FB1EA /* Color.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 				346E1B82280EBA7900D6F91F /* ContentView.swift in Sources */,
 				34FE612D281AAA76000BBEF3 /* CategoryRowView.swift in Sources */,
 				3A3A79482844F9CA002FB1EA /* ShoppingRowView.swift in Sources */,
+				3A3A794E284F4530002FB1EA /* Color.swift in Sources */,
 				347B1E792819AAA5008E47AC /* CategoryListView.swift in Sources */,
 				34E571822816DB0A00A2A27E /* DataController.swift in Sources */,
 				34E571752816D43100A2A27E /* SettingsView.swift in Sources */,
